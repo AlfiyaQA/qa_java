@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import java.util.List;
 
+import java.util.List;
 
 public class CatTest {
 
@@ -23,7 +23,7 @@ public class CatTest {
     public void getSoundReturnsCorrectValue() {
         String expectedSound = "Мяу";
         String actualSound = cat.getSound();
-        Assert.assertEquals(expectedSound,actualSound);
+        Assert.assertEquals("Method getSound() returns incorrect value", expectedSound, actualSound);
     }
 
     @Mock
@@ -34,6 +34,6 @@ public class CatTest {
         Mockito.when(predator.eatMeat()).thenReturn(List.of("Животные", "Птицы", "Рыба"));
         List<String> expected = List.of("Животные", "Птицы", "Рыба");
         List<String> actual = cat.getFood();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals("Method getFood() returns incorrect value for Cat", expected, actual);
     }
 }

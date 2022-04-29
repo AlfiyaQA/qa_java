@@ -27,10 +27,10 @@ public class LionTest {
     Lion lion = new Lion(feline);
 
     private final String sex;
-    public LionTest (String sex) {
-        this.sex = sex;
-    }
-    @Parameterized.Parameters
+
+    public LionTest(String sex) {this.sex = sex;}
+
+    @Parameterized.Parameters(name = "Тестовые данные: {0} {1}")
     public static Object[][] getTextData() {
         return new Object[][]{
                 {"Самец"},
@@ -49,16 +49,17 @@ public class LionTest {
         }
     }
 
-    @Test (expected= Exception.class)
-    public void checkHasManeThrowsException () throws Exception {
+    @Test(expected = Exception.class)
+    public void checkHasManeThrowsException() throws Exception {
         Lion lion = new Lion("Самочка");
         when(lion.hasMane).thenThrow(Exception.class);
     }
+
     @Test
     public void getKittensReturnsOneForLion() {
         int expected = 1;
         int actual = lion.getKittens();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals("Method getKittens() returns incorrect value", expected, actual);
     }
 
     @Test
@@ -66,17 +67,18 @@ public class LionTest {
         Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
         List<String> expected = List.of("Животные", "Птицы", "Рыба");
         List<String> actual = lion.getFood();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals("Method getFood() returns incorrect value for Lion", expected, actual);
     }
+
     @Test
     public void getFoodIncorrectListForLion() throws Exception {
         Mockito.when(feline.getFood("Травоядное")).thenReturn(List.of("Трава", "Различные растения"));
         List<String> expected = List.of("Трава", "Различные растения");
         List<String> actual = lion.getFood();
-        Assert.assertNotEquals(expected,actual);
+        Assert.assertNotEquals("Method getFood() returns the value as expected for Lion", expected, actual);
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void checkGetFoodThrowsException() throws Exception {
         Mockito.when(feline.getFood("Гибрид")).thenReturn(List.of("Трава", "Различные растения"));
         when(lion.getFood()).thenThrow(Exception.class);
